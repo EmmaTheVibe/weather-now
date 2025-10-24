@@ -6,7 +6,7 @@ import JumpingDots from "./_components/JumpingDots/JumpingDots";
 export default function page() {
   return (
     <>
-      <Suspense fallback={<JumpingDots />}>
+      <Suspense fallback={<p></p>}>
         <NavBar />
       </Suspense>
       <Suspense fallback={<JumpingDots />}>
