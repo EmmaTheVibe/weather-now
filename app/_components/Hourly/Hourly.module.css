@@ -1,0 +1,126 @@
+.hourly {
+  width: 100%;
+  border-radius: 18px;
+  background-color: var(--neutral-700);
+  color: var(--neutral-0);
+  padding: 24px 0 20px 0;
+}
+.line {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 16px;
+}
+.dropdown {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7px;
+  background-color: var(--neutral-600);
+  border-radius: 8px;
+  padding: 5px 10px;
+  position: relative;
+  cursor: pointer;
+}
+.dropbox {
+  position: absolute;
+  z-index: 10;
+  bottom: -348px;
+  right: 0;
+  background-color: var(--neutral-800);
+  border-radius: 8px;
+  width: 180px;
+  padding: 8px;
+  border: 1px solid var(--neutral-600);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.day {
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.day:hover {
+  background-color: var(--neutral-700);
+}
+.selectedDay {
+  background-color: var(--neutral-700);
+}
+.hourListWrapper {
+  border-radius: 8px;
+  height: 607px;
+  overflow-y: scroll;
+  position: relative;
+  padding: 0 16px;
+}
+.hourListWrapper::-webkit-scrollbar {
+  width: 5px;
+}
+
+.hourListWrapper::-webkit-scrollbar-track {
+  background: none;
+  border-radius: 10px;
+}
+
+.hourListWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--neutral-500);
+  border-radius: 10px;
+  border: var(--neutral-600);
+  cursor: pointer;
+}
+
+.hourList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hour {
+  width: 100%;
+  background-color: var(--neutral-500);
+  border: 1px solid var(--neutral-600);
+  border-radius: 8px;
+}
+.hourLoading {
+  height: 53.33px;
+}
+.hourLoaded {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+}
+.group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+.summaryImg {
+  width: 40px;
+}
+
+@media screen and (min-width: 400px) {
+  .hourly {
+    padding: 24px 0 22px 0;
+  }
+  .line,
+  .hourListWrapper {
+    padding: 0 20px;
+  }
+}
+
+@media screen and (min-width: 660px) {
+  .hourly {
+    width: 320px;
+    height: fit-content;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .hourly {
+    width: 375px;
+  }
+}

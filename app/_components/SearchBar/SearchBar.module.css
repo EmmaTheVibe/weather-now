@@ -1,0 +1,139 @@
+.searchContainer {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 24px;
+}
+.searchBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.searchBar img {
+  position: absolute;
+  left: 14px;
+}
+.searchInput {
+  width: 100%;
+  padding: 16px 16px 16px 42px;
+  font-size: 16px;
+  font-family: var(--font-dm-sans), sans-serif;
+  border: 2px solid var(--neutral-800);
+  background-color: var(--neutral-800);
+  color: var(--neutral-0);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.searchInput::placeholder {
+  /* Set the desired color */
+  color: var(--neutral-0);
+}
+
+.searchInput:focus {
+  border-color: var(--neutral-0);
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 8px;
+  background: var(--neutral-800);
+  border-radius: 8px;
+  max-height: 216px;
+  overflow-y: auto;
+  z-index: 8;
+  padding: 10px;
+}
+.suggestions::-webkit-scrollbar {
+  width: 5px;
+}
+
+.suggestions::-webkit-scrollbar-track {
+  background: none;
+  border-radius: 10px;
+}
+
+.suggestions::-webkit-scrollbar-thumb {
+  background-color: var(--neutral-500);
+  border-radius: 10px;
+  border: var(--neutral-600);
+  cursor: pointer;
+}
+
+.searching {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 6px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: var(--neutral-0);
+  width: 100%;
+  font-weight: 500;
+}
+.noResults {
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: var(--neutral-0);
+  width: 100%;
+  font-weight: 500;
+}
+.searching img {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.suggestionList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.suggestionItem {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 8px;
+}
+.suggestionItem p {
+  color: var(--neutral-0);
+}
+
+.suggestionItem:hover {
+  background-color: var(--neutral-700);
+}
+
+.locationName {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.locationDetails {
+  font-size: 14px;
+  color: #666;
+}
+
+@media screen and (min-width: 1000px) {
+  .searchContainer {
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .searchContainer {
+    margin-bottom: 44px;
+  }
+}

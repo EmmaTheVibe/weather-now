@@ -1,0 +1,86 @@
+.weather {
+  padding: 100px 0 60px 0;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.heading {
+  color: var(--neutral-0);
+  font-family: var(--font-bricolage-grotesque), sans-serif;
+  font-size: 40px;
+  width: 250px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.content {
+  width: 100%;
+}
+.txtBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.txtBox img {
+  animation: spin 1s linear infinite;
+}
+.txtBox p {
+  font-size: 20px;
+  font-weight: 500px;
+  color: var(--neutral-0);
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (min-width: 660px) {
+  .heading {
+    width: 100%;
+  }
+  .content {
+    display: flex;
+    gap: 20px;
+  }
+  .top {
+    width: 320px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .top {
+    width: 375px;
+  }
+  .heading {
+    margin-bottom: 44px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .heading {
+    font-size: 48px;
+    margin-bottom: 56px;
+  }
+  .content {
+    justify-content: space-between;
+  }
+  .top {
+    width: 605px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .top {
+    width: 805px;
+  }
+}
