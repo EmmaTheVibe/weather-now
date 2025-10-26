@@ -8,6 +8,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  gap: 6px;
 }
 .searchBar img {
   position: absolute;
@@ -124,6 +125,43 @@
 .locationDetails {
   font-size: 14px;
   color: #666;
+}
+
+.voiceButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  height: 56.67px;
+  width: 80px;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: var(--neutral-0);
+  background-color: var(--blue-700);
+}
+
+.voiceButton:hover {
+  background-color: var(--blue-500);
+}
+
+.voiceButton.listening {
+  animation: pulse 1.5s ease-in-out infinite;
+  background-color: var(--blue-500);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
 }
 
 @media screen and (min-width: 1000px) {

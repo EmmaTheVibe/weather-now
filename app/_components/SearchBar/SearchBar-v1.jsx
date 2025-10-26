@@ -3,7 +3,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Ear, Mic, Radio } from "lucide-react";
 import { useGeocoding } from "@/app/_hooks/useGeocoding";
 import styles from "./SearchBar.module.css";
 
@@ -13,48 +12,7 @@ export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const searchRef = useRef(null);
-  const recognitionRef = useRef(null);
-
-  const isVoiceSupported =
-    typeof window !== "undefined" &&
-    !!(window.SpeechRecognition || window.webkitSpeechRecognition);
-
-  useEffect(() => {
-    if (!isVoiceSupported) return;
-
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = "en-US";
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setSearchTerm(transcript);
-      setShowSuggestions(true);
-      setIsListening(false);
-    };
-
-    recognition.onerror = (event) => {
-      console.error("Speech recognition error:", event.error);
-      setIsListening(false);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
-
-    recognitionRef.current = recognition;
-
-    return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.abort();
-      }
-    };
-  }, [isVoiceSupported]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -100,22 +58,6 @@ export default function SearchBar() {
     setShowSuggestions(false);
   };
 
-  const handleVoiceSearch = () => {
-    if (!recognitionRef.current) return;
-
-    if (isListening) {
-      recognitionRef.current.stop();
-      setIsListening(false);
-    } else {
-      try {
-        recognitionRef.current.start();
-        setIsListening(true);
-      } catch (error) {
-        console.error("Failed to start voice recognition:", error);
-      }
-    }
-  };
-
   return (
     <div className={styles.searchContainer} ref={searchRef}>
       <div className={styles.searchBar}>
@@ -128,18 +70,6 @@ export default function SearchBar() {
           onChange={handleInputChange}
           onFocus={() => setShowSuggestions(true)}
         />
-        {isVoiceSupported && (
-          <button
-            onClick={handleVoiceSearch}
-            className={`${styles.voiceButton} ${
-              isListening ? styles.listening : ""
-            }`}
-            aria-label="Voice search"
-            type="button"
-          >
-            {isListening ? <Ear /> : <Mic />}
-          </button>
-        )}
       </div>
 
       {shouldShowSuggestions && (
@@ -163,18 +93,6 @@ export default function SearchBar() {
           {!isLoading && suggestions && suggestions.length > 0 && (
             <div className={styles.suggestionList}>
               {suggestions
-                .filter((location, index, self) => {
-                  return (
-                    index ===
-                    self.findIndex((l) => {
-                      return (
-                        Math.abs(l.latitude - location.latitude) < 0.01 &&
-                        Math.abs(l.longitude - location.longitude) < 0.01 &&
-                        l.country === location.country
-                      );
-                    })
-                  );
-                })
                 .sort((a, b) => (b.population || 0) - (a.population || 0))
                 .map((location, index) => (
                   <div
