@@ -3,14 +3,19 @@
   width: 100%;
   max-width: 500px;
   margin-bottom: 24px;
+  display: flex;
+  gap: 6px;
+}
+.box {
+  position: relative;
 }
 .searchBar {
   position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 6px;
 }
-.searchBar img {
+.searchIcon {
   position: absolute;
   left: 14px;
 }
@@ -150,6 +155,11 @@
 .voiceButton.listening {
   animation: pulse 1.5s ease-in-out infinite;
   background-color: var(--blue-500);
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 @keyframes pulse {

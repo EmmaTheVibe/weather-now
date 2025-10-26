@@ -111,32 +111,18 @@ export default function SearchBar() {
       setIsListening(false);
     } else {
       try {
-        // Force stop any existing instance first (iOS workaround)
-        if (recognitionRef.current) {
-          recognitionRef.current.abort();
-        }
-
-        // Small delay for iOS
-        setTimeout(() => {
-          recognitionRef.current.start();
-          setIsListening(true);
-        }, 100);
+        recognitionRef.current.start();
+        setIsListening(true);
       } catch (error) {
         console.error("Failed to start voice recognition:", error);
-        setIsListening(false);
       }
     }
   };
 
   return (
     <div className={styles.searchContainer} ref={searchRef}>
-      <div className={styles.box}></div>
       <div className={styles.searchBar}>
-        <img
-          src="./assets/images/icon-search.svg"
-          alt="search"
-          className={styles.searchIcon}
-        />
+        <img src="./assets/images/icon-search.svg" alt="search" />
         <input
           type="text"
           className={styles.searchInput}
@@ -146,69 +132,70 @@ export default function SearchBar() {
           onFocus={() => setShowSuggestions(true)}
         />
 
-        {shouldShowSuggestions && (
-          <div className={styles.suggestions}>
-            {isLoading && (
-              <div className={styles.searching}>
-                <img src="./assets/images/icon-loading.svg" alt="loading" />
-                <p>Search in progress...</p>
-              </div>
-            )}
-
-            {!isLoading &&
-              suggestions &&
-              suggestions.length === 0 &&
-              debouncedTerm && (
-                <div className={styles.noResults}>
-                  <p>No result found</p>
-                </div>
-              )}
-
-            {!isLoading && suggestions && suggestions.length > 0 && (
-              <div className={styles.suggestionList}>
-                {suggestions
-                  .filter((location, index, self) => {
-                    return (
-                      index ===
-                      self.findIndex((l) => {
-                        return (
-                          Math.abs(l.latitude - location.latitude) < 0.01 &&
-                          Math.abs(l.longitude - location.longitude) < 0.01 &&
-                          l.country === location.country
-                        );
-                      })
-                    );
-                  })
-                  .sort((a, b) => (b.population || 0) - (a.population || 0))
-                  .map((location, index) => (
-                    <div
-                      key={`${location.latitude}-${location.longitude}-${index}`}
-                      className={styles.suggestionItem}
-                      onClick={() => handleLocationSelect(location)}
-                    >
-                      <div className={styles.locationName}>
-                        <p>
-                          {location.name}, {location.country}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            )}
-          </div>
+        {isVoiceSupported && (
+          <button
+            onClick={handleVoiceSearch}
+            className={`${styles.voiceButton} ${
+              isListening ? styles.listening : ""
+            }`}
+            aria-label="Voice search"
+            type="button"
+          >
+            {isListening ? <Ear /> : <Mic />}
+          </button>
         )}
       </div>
-      {isVoiceSupported && (
-        <button
-          onClick={handleVoiceSearch}
-          className={`${styles.voiceButton} ${
-            isListening ? styles.listening : ""
-          }`}
-          aria-label="Voice search"
-          type="button"
-        >
-          {isListening ? <Ear /> : <Mic />}
-        </button>
+
+      {shouldShowSuggestions && (
+        <div className={styles.suggestions}>
+          {isLoading && (
+            <div className={styles.searching}>
+              <img src="./assets/images/icon-loading.svg" alt="loading" />
+              <p>Search in progress...</p>
+            </div>
+          )}
+
+          {!isLoading &&
+            suggestions &&
+            suggestions.length === 0 &&
+            debouncedTerm && (
+              <div className={styles.noResults}>
+                <p>No result found</p>
+              </div>
+            )}
+
+          {!isLoading && suggestions && suggestions.length > 0 && (
+            <div className={styles.suggestionList}>
+              {suggestions
+                .filter((location, index, self) => {
+                  return (
+                    index ===
+                    self.findIndex((l) => {
+                      return (
+                        Math.abs(l.latitude - location.latitude) < 0.01 &&
+                        Math.abs(l.longitude - location.longitude) < 0.01 &&
+                        l.country === location.country
+                      );
+                    })
+                  );
+                })
+                .sort((a, b) => (b.population || 0) - (a.population || 0))
+                .map((location, index) => (
+                  <div
+                    key={`${location.latitude}-${location.longitude}-${index}`}
+                    className={styles.suggestionItem}
+                    onClick={() => handleLocationSelect(location)}
+                  >
+                    <div className={styles.locationName}>
+                      <p>
+                        {location.name}, {location.country}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
